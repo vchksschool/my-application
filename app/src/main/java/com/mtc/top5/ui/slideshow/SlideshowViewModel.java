@@ -1,4 +1,4 @@
-package com.example.top5.ui.slideshow;
+package com.mtc.top5.ui.slideshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

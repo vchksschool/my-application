@@ -1,4 +1,4 @@
-package com.example.top5.ui.slideshow;
+package com.mtc.top5.ui.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.top5.R;
-import com.example.top5.databinding.FragmentSlideshowBinding;
+import com.mtc.top5.databinding.FragmentSlideshowBinding;
 
 public class SlideshowFragment extends Fragment {
 

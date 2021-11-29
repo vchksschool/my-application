@@ -1,4 +1,4 @@
-package com.example.top5.ui.gallery;
+package com.mtc.top5.ui.gallery;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

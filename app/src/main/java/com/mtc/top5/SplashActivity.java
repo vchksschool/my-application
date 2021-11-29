@@ -1,4 +1,4 @@
-package com.example.top5;
+package com.mtc.top5;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
+import com.mtc.top5.R;
 
 public class SplashActivity extends AppCompatActivity {
 

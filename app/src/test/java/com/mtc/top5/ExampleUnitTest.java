@@ -1,4 +1,4 @@
-package com.example.top5;
+package com.mtc.top5;
 
 import org.junit.Test;
 
