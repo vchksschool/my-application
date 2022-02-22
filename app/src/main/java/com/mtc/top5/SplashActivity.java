@@ -3,6 +3,7 @@ package com.mtc.top5;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,14 +13,26 @@ import android.widget.TextView;
 
 import com.mtc.top5.R;
 
+import java.util.concurrent.CountDownLatch;
+
 public class SplashActivity extends AppCompatActivity {
 
     private TextView appName;
-
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final CountDownLatch latch = new CountDownLatch(1);
+        mContext = this;
+
+        MyThread thread = new MyThread(latch, mContext);
+        new Thread(thread).start();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_splash);
 
         appName = findViewById(R.id.app_name);
@@ -29,6 +42,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.myanim);
         appName.setAnimation(anim);
+
 
         new Thread() {
 

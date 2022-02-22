@@ -1,5 +1,6 @@
 package com.mtc.top5;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {//getting view of the category
         View myView;
 
         if(convertView == null)
@@ -45,11 +46,24 @@ public class CategoryAdapter extends BaseAdapter {
             myView = convertView;
         }
 
+        myView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),TestActivity.class);
+                intent.putExtra("CAT_INDEX", position);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+
+
+
         TextView catName = myView.findViewById(R.id.catName);
         TextView noOfTests = myView.findViewById(R.id.no_of_tests);
 
         catName.setText(cat_list.get(position).getName());
         noOfTests.setText(String.valueOf(cat_list.get(position).getNoOfTests()) +  " Tests");
+
 
         return myView;
     }

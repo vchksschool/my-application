@@ -1,5 +1,6 @@
 package com.mtc.top5;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-
+    private Context mContext;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout main_frame;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
                 .build();
+
         setFragement(new CategoryFragment());
     }
 
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(main_frame.getId(),fragement);
+
         transaction.commit();
     }
 

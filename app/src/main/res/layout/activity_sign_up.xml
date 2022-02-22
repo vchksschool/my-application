@@ -61,7 +61,7 @@
         app:layout_constraintRight_toRightOf="parent"
         >
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/usernameID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -89,7 +89,7 @@
             android:textColor="@color/black"
             />
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/loginpasswordID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -103,7 +103,7 @@
             android:textColor="@color/black"
             />
         <EditText
-            android:id="@+id/confirm_pass"
+            android:id="@+id/confirm_passID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -132,7 +132,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="32dp"
-
+        android:onClick="save"
 
         android:textColor="@color/white"
         android:textSize="17sp"
@@ -146,5 +146,15 @@
         android:background="@drawable/round_corner_button"
         app:backgroundTint="@color/colorPrimary"/>
 
+    <TextView
+        android:id="@+id/tvStatus"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/signup_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

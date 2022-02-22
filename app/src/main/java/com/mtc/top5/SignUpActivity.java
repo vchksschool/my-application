@@ -1,124 +1,91 @@
 package com.mtc.top5;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
+    private EditText etName, etEmail, etPassword, etReenterPassword;
+    private TextView tvStatus;
+    private Button btnRegister;
+    private String URL = "http://51.38.80.233/victory/register.php";
+    private String name, email, password, reenterPassword;
 
-    private EditText name, email, pass, confirmPass;
-    private Button signupB;
-    private ImageView backB;
-    private FirebaseAuth mAuth;
-    private String emailStr, passStr, confirmPassStr, nameStr;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        etName = findViewById(R.id.usernameID);
+        etEmail = findViewById(R.id.emailID);
+        etPassword = findViewById(R.id.loginpasswordID);
+        etReenterPassword = findViewById(R.id.confirm_passID);
+        tvStatus = findViewById(R.id.tvStatus);
+        btnRegister = findViewById(R.id.signup_button);
+        name = email = password = reenterPassword = "";
+    }
 
-        name = findViewById(R.id.username);
-        email = findViewById(R.id.emailID);
-        pass = findViewById(R.id.password);
-        confirmPass = findViewById(R.id.confirm_pass);
-        signupB = findViewById(R.id.signup_button);
-        backB = findViewById(R.id.backB);
-        mAuth = FirebaseAuth.getInstance();
+    public void save(View view) {
+        name = etName.getText().toString().trim();
+        email = etEmail.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
+        reenterPassword = etReenterPassword.getText().toString().trim();
+        if(!password.equals(reenterPassword)){
+            Toast.makeText(this, "Password Mismatch", Toast.LENGTH_SHORT).show();
+        }
+        else if(!name.equals("") && !email.equals("") && !password.equals("")){
 
+            tvStatus.setText("Succesfully registered");
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response.equals("success")) {
 
-
-        backB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-
-            }
-        });
-
-        signupB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(validate()){
-                    signupNewUser();
-
+                        tvStatus.setText("Successfully registered.");
+                        btnRegister.setClickable(false);
+                        
+                    } else{
+                        tvStatus.setText(response);                    }
                 }
-
-            }
-        });
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("username", name);
+                    data.put("email", email);
+                    data.put("password", password);
+                    return data;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(stringRequest);
+        }
     }
-
-    private boolean validate()
-    {
-        nameStr = name.getText().toString().trim();
-        emailStr = email.getText().toString().trim();
-        passStr = pass.getText().toString().trim();
-        confirmPassStr = confirmPass.getText().toString().trim();
-
-        if(nameStr.isEmpty())
-        {
-            name.setError("Please enter your name");
-            return false;
-        }
-
-        if (emailStr.isEmpty())
-        {
-            email.setError("Please Enter an email address");
-            return false;
-        }
-        if (passStr.isEmpty())
-        {
-            pass.setError("Please Enter a Password");
-            return false;
-        }
-        if (confirmPassStr.isEmpty())
-        {
-            confirmPass.setError("Please enter a Password");
-            return false;
-        }
-
-        if(passStr.compareTo(confirmPassStr) != 0)
-        {
-            Toast.makeText(SignUpActivity.this, " Please ensure your confirmed password is the same as your password ! ", Toast.LENGTH_SHORT).show();
-            return false;
-        } // 0 means the passwords are the same
-        return true;
-    }
-
-    private void signupNewUser()
-    {
-        mAuth.createUserWithEmailAndPassword(emailStr, passStr)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
-                            startActivity(intent);
-                            SignUpActivity.this.finish();
-                            //goes to main activity if signup is successful
-                        } else {
-                            // If sign in fails, display a message to the user.
-
-                            Toast.makeText(SignUpActivity.this, "Authentication failed."+ task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-
+    public void login(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
