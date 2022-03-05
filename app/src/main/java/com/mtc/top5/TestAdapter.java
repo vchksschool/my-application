@@ -1,5 +1,6 @@
 package com.mtc.top5;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,13 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             testNo = itemView.findViewById(R.id.testNo);
             topScore = itemView.findViewById(R.id.scoretext);
             progressBar = itemView.findViewById(R.id.testProgressBar);
+            /*itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), QuestionsActivity.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });*/
 
         }
 
@@ -57,6 +65,13 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             testNo.setText(String.valueOf((position+1)*10) + " Minute Quiz");
             topScore.setText(String.valueOf(progress) + " %");
             progressBar.setProgress(progress);
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), StartQuizActivity2.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

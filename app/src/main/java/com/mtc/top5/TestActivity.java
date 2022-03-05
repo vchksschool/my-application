@@ -23,6 +23,7 @@ public class TestActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private List<TestModel> testList;
     private Context mContext;
+    public  int NoOfQuestions;
 
     private List<CategoryModel> catList = new ArrayList<>();
     @Override
@@ -37,7 +38,8 @@ public class TestActivity extends AppCompatActivity {
         final CountDownLatch latch = new CountDownLatch(1);
         mContext = this;
         MyThread a = new MyThread(latch, mContext);
-        catList = a.getFinalCat();
+        catList = a.getcurrentFinalCat();
+
         int cat_index = getIntent().getIntExtra("CAT_INDEX", 0);
         getSupportActionBar().setTitle(catList.get(cat_index).getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,9 +60,9 @@ public class TestActivity extends AppCompatActivity {
     {
         testList = new ArrayList<>();
         testList.add(new TestModel("1", 50, 10));
-        testList.add(new TestModel("1", 50, 20));
-        testList.add(new TestModel("1", 50, 30));
-        testList.add(new TestModel("1", 50, 40));
+        testList.add(new TestModel("2", 50, 20));
+        testList.add(new TestModel("3", 50, 30));
+        testList.add(new TestModel("4", 50, 40));
 
 
     }

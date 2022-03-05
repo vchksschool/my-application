@@ -13,6 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Top5">
         <activity
+            android:name=".StartQuizActivity2"
+            android:exported="false" />
+
+        <activity
+            android:name=".QuestionsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".TestActivity"
             android:exported="false" />
         <activity
@@ -32,8 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Success"></activity>
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".Success" />
+        <activity android:name=".SignUpActivity" />
     </application>
 
 </manifest>

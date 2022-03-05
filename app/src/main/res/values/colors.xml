@@ -10,5 +10,8 @@
     <color name="colorPrimary">#FD0000</color>
     <color name="colorPrimaryDark">#831414</color>
     <color name="colorAccent">#FFFFFF</color>
+    <color name="main_background">#FFCCCB</color>
+    <color name="green">#2DF836</color>
+
 
 </resources>

@@ -132,7 +132,7 @@ public class CategoryFragment extends Fragment {
         MyThread ak = new MyThread(latch, mContext);
 
 
-        catList.clear();
+
         catList = ak.getFinalCat();
         System.out.println(Thread.currentThread().getName() + " done."+ "AFTER CATLIST CALLED"+ catList);
         View view = inflater.inflate(R.layout.fragment_category, container, false); //attach to root is false, therefore the layout from fragment_category is inflated and returned as view
@@ -146,6 +146,7 @@ public class CategoryFragment extends Fragment {
         CategoryAdapter adapter = new CategoryAdapter(catList);
 
         catView.setAdapter(adapter);
+
         return view;
     }
     private void loadCategories(){

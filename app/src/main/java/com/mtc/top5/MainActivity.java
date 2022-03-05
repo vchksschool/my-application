@@ -1,11 +1,17 @@
 package com.mtc.top5;
 
+import android.app.ActionBar;
+import android.app.Notification;
 import android.content.Context;
+
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.FrameLayout;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -13,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -29,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private Context mContext;
+    public static  int popupcount = 0;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout main_frame;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
@@ -66,19 +74,36 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
+        //setSupportActionBar(binding.appBarMain.toolbar);
+
+
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         main_frame =  findViewById(R.id.main_frame);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        //DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        System.out.println("main acitivy here");
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
                 .build();
-
+        System.out.println("main acitivy here");
+        //popupcount += 1;
+        //if (popupcount ==1){
+            //loadpopup
+            //in loadpopup start main activtiy after loaded
+        //}
+        //else{
+            //setfragement
+        //}
         setFragement(new CategoryFragment());
     }
 
