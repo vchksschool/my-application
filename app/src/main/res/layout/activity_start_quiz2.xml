@@ -8,7 +8,7 @@
     tools:context=".StartQuizActivity2">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/st_cat_name"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/st_test_no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -46,7 +46,7 @@
         android:layout_width="0dp"
         android:id="@+id/ll1"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/start_quizB"
+        app:layout_constraintBottom_toTopOf="@+id/start_testB"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="8dp"
@@ -97,6 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5"
+                    android:id="@+id/st_total_ques"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:textSize="15sp"
@@ -145,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="80"
+                    android:id="@+id/st_best_score"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:textSize="15sp"
@@ -193,6 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 m"
+                    android:id="@+id/st_time"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:textSize="15sp"
@@ -206,7 +209,7 @@
 
     </LinearLayout>
     <Button
-        android:id="@+id/start_quizB"
+        android:id="@+id/start_testB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -233,7 +236,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
-
+        android:id="@+id/st_backB"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 

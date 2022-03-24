@@ -4,12 +4,23 @@ public class CategoryModel {
     private String docID;
     private String name;
     private int noOfTests;
+    private int catNumDB;
 
-    public CategoryModel(String docID, String name, int noOfTests) {
+    public int getCatNumDB() {
+        return catNumDB;
+    }
+
+    public void setCatNumDB(int catNumDB) {
+        this.catNumDB = catNumDB;
+    }
+
+    public CategoryModel(String docID, String name, int noOfTests, int catNumDB) {
         this.docID = docID;
         this.name = name;
         this.noOfTests = noOfTests;
+        this.catNumDB =catNumDB;
     }
+
 
     public String getDocID() {
         return docID;

@@ -14,8 +14,10 @@ import java.util.List;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
     private List<TestModel> testList;
+    private int cat_index;
 
-    public TestAdapter(List<TestModel> testList) {
+    public TestAdapter(List<TestModel> testList, int cat_index) {
+        this.cat_index = cat_index;
         this.testList = testList;
     }
 
@@ -68,6 +70,14 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
+                    MyThread.g_quesList.clear();
+                    MyThread.NoOfQues = (position+1)*10;
+                    MyThread.test_index = position;
+                    MyThread.currentCatNumDB = MyThread.catList.get(cat_index).getCatNumDB();
+                    System.out.println("Below is the current catnumber");
+                    System.out.println(MyThread.currentCatNumDB);
+
+                    MyThread.loadquestions();
                     Intent intent = new Intent(itemView.getContext(), StartQuizActivity2.class);
                     itemView.getContext().startActivity(intent);
                 }

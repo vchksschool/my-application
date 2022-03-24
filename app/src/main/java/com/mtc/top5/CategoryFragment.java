@@ -65,7 +65,7 @@ public class CategoryFragment extends Fragment {
         public void run() {
             mContext = getContext();
             RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-            catList.add(new CategoryModel("1","before", 2));
+
 
             System.out.println(Thread.currentThread().getName());
 
@@ -81,7 +81,8 @@ public class CategoryFragment extends Fragment {
 
 
                             String catname = categories.getString("category_name").toString();
-                            catList.add(new CategoryModel(Integer.toString(i),catname, 2));
+                            int catNumDB = Integer.valueOf(categories.getString("category_number"));
+                            catList.add(new CategoryModel(Integer.toString(i),catname, 2, catNumDB));
 
 
 
@@ -152,7 +153,7 @@ public class CategoryFragment extends Fragment {
     private void loadCategories(){
         mContext = getContext();
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-        catList.add(new CategoryModel("1","before", 2));
+        //catList.add(new CategoryModel("1","before", 2));
 
         System.out.println(Thread.currentThread().getName());
 
@@ -168,7 +169,7 @@ public class CategoryFragment extends Fragment {
 
 
                         String catname = categories.getString("category_name").toString();
-                        catList.add(new CategoryModel(Integer.toString(i),catname, 2));
+                        //catList.add(new CategoryModel(Integer.toString(i),catname, 2));
 
 
 

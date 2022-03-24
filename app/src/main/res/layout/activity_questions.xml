@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1/25"
+            android:id="@+id/tv_quesID"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20:15 min"
+            android:id="@+id/tv_time"
             android:layout_weight="1"
             android:textColor="@color/green"
             android:textSize="20sp"
@@ -47,16 +49,17 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="36dp"
+            android:layout_weight="1"
+            android:id="@+id/submitB"
             android:background="@drawable/button_border"
             android:backgroundTint="@android:color/holo_orange_light"
-            android:layout_weight="1"
             android:text="Submit"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
+        android:id="@+id/ll4"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark"
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GK"
+            android:id="@+id/qa_catName"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_weight="1"
@@ -76,6 +80,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:id="@+id/qa_bookmark"
             android:src="@drawable/ic_bookmark"
             android:layout_weight="1"
 
@@ -83,6 +88,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/ques_list_gridB"
             android:src="@drawable/ic_right_menu"
             android:layout_weight="1"
             />
@@ -91,6 +97,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:id="@+id/ll3"
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@color/colorPrimary"
@@ -99,19 +106,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         >
+
         <ImageButton
+            android:id="@+id/prev_quesB"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="8dp"
-            app:srcCompat="@drawable/ic_left"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="24dp"
             android:background="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_left"
 
 
             />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="36dp"
+            android:id="@+id/clear_selB"
             android:background="@drawable/button_border"
             android:text="Clear Selection"
             android:textColor="@color/white"
@@ -121,8 +132,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="36dp"
+
+            android:id="@+id/markB"
             android:background="@drawable/button_border"
             android:text="Mark For Review"
+
             android:layout_marginLeft="8dp"
 
             android:textColor="@color/white"
@@ -132,9 +146,11 @@
         <ImageButton
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="24dp"
+
+            android:id="@+id/next_quesB"
             android:background="@color/colorPrimaryDark"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="8dp"
             app:srcCompat="@drawable/ic_right"
 
 
@@ -142,4 +158,22 @@
             />
     </LinearLayout>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/questions_view"
+        android:layout_margin="16dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/ll3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll4"
+
+
+
+
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

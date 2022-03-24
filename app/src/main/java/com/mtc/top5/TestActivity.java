@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -41,6 +42,8 @@ public class TestActivity extends AppCompatActivity {
         catList = a.getcurrentFinalCat();
 
         int cat_index = getIntent().getIntExtra("CAT_INDEX", 0);
+        MyThread.g_selected_cat_index = cat_index;
+        System.out.println(cat_index);
         getSupportActionBar().setTitle(catList.get(cat_index).getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -50,19 +53,35 @@ public class TestActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         testView.setLayoutManager(layoutManager);
 
-        loadTestData();
+        loadTestData(cat_index);
 
-        TestAdapter adapter = new TestAdapter(testList);
+
+        TestAdapter adapter = new TestAdapter(testList, cat_index);
+
         testView.setAdapter(adapter);
     }
 
-    private void loadTestData()
+
+
+    private void loadTestData(int cat_index)
     {
         testList = new ArrayList<>();
-        testList.add(new TestModel("1", 50, 10));
-        testList.add(new TestModel("2", 50, 20));
-        testList.add(new TestModel("3", 50, 30));
-        testList.add(new TestModel("4", 50, 40));
+
+        MyThread.currentCatNumDB = MyThread.catList.get(cat_index).getCatNumDB();
+        MyThread.setj();
+        String looplength = Integer.toString(MyThread.j);
+        System.out.println(looplength+"before");
+        looplength = looplength.substring(0,1);
+        //fix this
+        int k = Integer.valueOf(looplength);
+
+        System.out.println(Integer.toString(k)+ "here");
+        for (int i = 0; i<k; i++){
+            testList.add(new TestModel(Integer.toString((i+1)), 50, (i+1)*10));
+
+        }
+
+
 
 
     }
