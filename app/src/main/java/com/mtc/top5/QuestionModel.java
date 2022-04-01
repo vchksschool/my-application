@@ -8,7 +8,40 @@ public class QuestionModel {
     private String optionC;
     private String optionD;
     private String optionE;
+    private int status;
     private int correctAns;
+    private  int selectedAns;
+
+
+    public int getOptionforq() {
+        return optionforq;
+    }
+
+    public void setOptionforq(int optionforq) {
+        this.optionforq = optionforq;
+    }
+
+    private int optionforq;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    private int time;
 
 
     public String getQuestion() {
@@ -68,7 +101,7 @@ public class QuestionModel {
     }
 
 
-    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String optionE, int correctAns) {
+    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String optionE, int correctAns, int time, int selectedAns, int status, int optionforq) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
@@ -76,5 +109,20 @@ public class QuestionModel {
         this.optionD = optionD;
         this.optionE = optionE;
         this.correctAns = correctAns;
+        this.time = time;
+        this.selectedAns = selectedAns;
+        this.status = status;
+        this.optionforq = optionforq;
+
+    }
+
+    public int getSelectedAns() {
+        return selectedAns;
+    }
+
+    public void setSelectedAns(int selectedAns) {
+        System.out.println("Selected answer just changed to" + String.valueOf(selectedAns));
+
+        this.selectedAns = selectedAns;
     }
 }

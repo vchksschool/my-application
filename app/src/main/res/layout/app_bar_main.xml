@@ -14,8 +14,13 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            app:title="Everything Top 5"
+
+
+            app:titleTextColor="@color/white"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+
             app:popupTheme="@style/Theme.Top5.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

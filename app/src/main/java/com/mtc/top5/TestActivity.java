@@ -22,6 +22,7 @@ public class TestActivity extends AppCompatActivity {
 
     private RecyclerView testView;
     private Toolbar toolbar;
+
     private List<TestModel> testList;
     private Context mContext;
     public  int NoOfQuestions;

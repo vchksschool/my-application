@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.Barrier;
 import androidx.fragment.app.Fragment;
 
@@ -60,7 +61,7 @@ public class CategoryFragment extends Fragment {
         return catList;
     }
 
-    Runnable runnable = new Runnable() {
+    /*Runnable runnable = new Runnable() {
         @Override
         public void run() {
             mContext = getContext();
@@ -88,7 +89,7 @@ public class CategoryFragment extends Fragment {
 
 
                         } catch (JSONException e) {
-                            System.out.println("nah didnt work");
+                            System.out.println("didnt work");
 
 
                             e.printStackTrace();
@@ -110,14 +111,8 @@ public class CategoryFragment extends Fragment {
             requestQueue.add(jsonArrayRequest);
         }
 
-    };
-    public void LoadList(){
-        // you can use whatever List implementation you want here
+    };*///First attempt at solving threading issue using runnable
 
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,7 +121,11 @@ public class CategoryFragment extends Fragment {
 
         //Thread thread = new Thread(runnable);
         //thread.start();
-        final CountDownLatch latch = new CountDownLatch(1);
+        Toolbar toolbar= getActivity().findViewById(R.id.toolbar);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Categories");
+
+        final CountDownLatch latch = new CountDownLatch(1);//count down latch solved threading issue
         mContext = getContext();
 
 
@@ -150,7 +149,7 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
-    private void loadCategories(){
+    /*private void loadCategories(){
         mContext = getContext();
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         //catList.add(new CategoryModel("1","before", 2));
@@ -208,5 +207,5 @@ public class CategoryFragment extends Fragment {
 
 
 
-    }
+    }*///his was the implementation which made me aware of the issue of UI Threading since the database fetch was ding to much work on the main thread
 }

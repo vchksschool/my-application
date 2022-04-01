@@ -3,17 +3,26 @@ package com.mtc.top5;
 
 import android.content.Context;
 import android.icu.number.IntegerWidth;
+import android.os.Build;
+import android.widget.Toast;
 
+import java.net.URL;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +39,13 @@ import java.util.concurrent.CountDownLatch;
 class MyThread extends Fragment implements Runnable{
     public static List<CategoryModel> catList;
     public static int NoOfQues = 0;
+    private static String URL = "http://51.38.80.233/victory/save_quiz.php";
     public static int j;
     public static ArrayList<ArrayList<String>> qlistOfLists = new ArrayList<ArrayList<String>>();
     public static int currentCatNumDB = 0;
     public static ArrayList<ArrayList<String>> listOfLists = new ArrayList<ArrayList<String>>();
     public static int qlength;
+
     public static Map<String, String> categoryNumber_numberOfQuestions = new HashMap<String, String>();//remember you set these values inside as a string
     public static List<QuestionModel> g_quesList = new ArrayList<>();
     public static int g_selected_cat_index = 0;
@@ -43,7 +54,68 @@ class MyThread extends Fragment implements Runnable{
     public static int startindex;
     public static int endindex;
     public static ArrayList<String> question_cat1;
+    public static final int NOT_VISITED = 0;
+    public static final int UNANSWERED = 0;
+    public static final int ANSWERED =  0;
+    public static final int REVIEW = 0;
 
+    public static ProfileModel myProfile = new ProfileModel(null);
+
+   /* public static void saveResult(int score, MyCompleteListenr completeListener)
+    {
+        //update totl_score with score
+        if score>g_quesList.get(g_selected_quiz_index).getTopScore())
+        {
+            //update top socre
+        }
+    }*/
+    public static void saveResult(int score, Context c,  MyCompleteListener completeListener)
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("success")) {
+
+                    System.out.println("Successful.");
+                    completeListener.onSuccess();
+
+
+                } else{
+                    System.out.println(response);
+                    completeListener.onFailure();       }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(c, error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                String date = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    date = String.valueOf(LocalDate.now());
+                    System.out.println(date);
+                }
+
+                data.put("game_finished_date", date);
+                data.put("points_earned",String.valueOf(score));
+                data.put("email", myProfile.getEmail());
+                //data.put("email",email);
+                return data;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(c);
+        requestQueue.add(stringRequest);
+    }
+    public static void getUserData(MyCompleteListener completeListener)
+    {
+        //myProfile.setName("name");
+        //myProfile.setEmail("email");
+    }
     public static void setj()
     {
         int i = 0;
@@ -149,10 +221,11 @@ class MyThread extends Fragment implements Runnable{
                 String top3 = finalq_ans.get(4).toString();
                 String top4 = finalq_ans.get(5).toString();
                 String top5 = finalq_ans.get(6).toString();
-                int randomans = ThreadLocalRandom.current().nextInt(0, 5);
-                //System.out.println(question+" "+ categorynum+ " "+ top1+ " "+ top2+ " "+top3 + " "+ top4+ " "+ top5 + " "+ Integer.toString(randomans));
-                g_quesList.add(new QuestionModel(question,top1,top2,top3,top4,top5,randomans));
 
+                int randomans = ThreadLocalRandom.current().nextInt(1, 6);
+                //System.out.println(question+" "+ categorynum+ " "+ top1+ " "+ top2+ " "+top3 + " "+ top4+ " "+ top5 + " "+ Integer.toString(randomans));
+                g_quesList.add(new QuestionModel(question,top1,top2,top3,top4,top5,randomans, ((test_index+1)*10),-1,0 ,- 1));
+                //TODO:CREATE NEW COLUMN IN QUESTIONS_ANSWERS TABLE WHICH HAS A STATUS OF 0/-1 SET AND IS UPDATED EACH TIME A QUESTION IS ANSWERED. SEEK PART 22 FOR MORE INFO
 
 
                 //System.out.println(question);
@@ -217,7 +290,7 @@ class MyThread extends Fragment implements Runnable{
         c = context;
 
     }
-    public List<CategoryModel> getcurrentFinalCat(){
+    public static List<CategoryModel> getcurrentFinalCat(){
         return  catList;
 
     }

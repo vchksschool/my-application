@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -36,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private Context mContext;
+
     public static  int popupcount = 0;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout main_frame;
+
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -46,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
                     switch(menuItem.getItemId())
                     {
-                        case R.id.nav_home:
+                        case R.id.navigation_home:
                             setFragement(new CategoryFragment());
                             return true;
 
-                        case R.id.nav_leaderboard:
+                        case R.id.navigation_leaderboard:
                             setFragement(new LeaderboardFragment());
                             return true;
 
 
-                        case R.id.nav_account:
+                        case R.id.navigation_account:
                             setFragement(new AccountFragment());
                             return true;
 
@@ -83,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Categories");
         //DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,9 +98,13 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.navigation_home, R.id.navigation_account, R.id.navigation_leaderboard)
                 .setOpenableLayout(drawer)
                 .build();
+
+
+
+
         System.out.println("main acitivy here");
         //popupcount += 1;
         //if (popupcount ==1){
@@ -107,15 +117,44 @@ public class MainActivity extends AppCompatActivity {
         setFragement(new CategoryFragment());
     }
 
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+
+        switch(item.getItemId())
+        {
+            case R.id.nav_home:
+                setFragement(new CategoryFragment());
+
+
+                return true;
+
+            case R.id.nav_leaderboard:
+                setFragement(new LeaderboardFragment());
+                return true;
+
+
+            case R.id.nav_account:
+                setFragement(new AccountFragment());
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     private void setFragement(Fragment fragement)
     {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -123,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         transaction.commit();
     }
+
 
 
 

@@ -1,12 +1,18 @@
 package com.mtc.top5;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,7 +20,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AccountFragment extends Fragment {
-
+    private LinearLayout logoutB;
+    private TextView profile_img_text, name, score, rank;
+    private LinearLayout leaderB, profileB,bookmarksB;
+    private BottomNavigationView bottomNavigationView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +68,58 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View view =inflater.inflate(R.layout.fragment_account, container, false);
+        initiViews(view);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("My Account");
+        //String UserName= MyThread.myProfile.getName();
+        //profile_img_text.setText(userName.toUpperCase().substring(0,1));
+        //name.setText(userName);
+        //score.setText(String.valueOf(MyThread.myPerformance.getScore()));
+
+        logoutB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SplashActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+        bookmarksB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        profileB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        leaderB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomNavigationView.setSelectedItemId(R.id.navigation_leaderboard);
+
+            }
+        });
+        return view;
+    }
+    private void initiViews(View view)
+    {
+        logoutB =view.findViewById(R.id.logoutB);
+        profile_img_text = view.findViewById(R.id.profile_img_text);
+        score =view.findViewById(R.id.total_score);
+        name =view.findViewById(R.id.name);
+        rank =view.findViewById(R.id.rank);
+        leaderB =view.findViewById(R.id.leaderboardB);
+        bookmarksB =view.findViewById(R.id.bookmarkB);
+        profileB =view.findViewById(R.id.profileB);
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_nav_bar);
+
     }
 }

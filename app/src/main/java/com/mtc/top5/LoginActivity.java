@@ -75,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (response.contains("success")) {
                         Toast.makeText(LoginActivity.this, "valid Login Id/Password", Toast.LENGTH_SHORT).show();
+                        //String name =  GetName(email);//Extra call for getting actual username(not necessary/requires a further fetch).
+                        MyThread.myProfile = new ProfileModel(email);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     Map<String, String> data = new HashMap<>();
                     data.put("email", email);
                     data.put("password", password);
+
                     return data;
                 }
             };
@@ -107,5 +110,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
         finish();
+    }
+    public String  GetName(String email){
+        return email;
+
     }
 }

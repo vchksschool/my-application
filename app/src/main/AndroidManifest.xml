@@ -13,13 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Top5">
         <activity
+            android:name=".ScoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".StartQuizActivity2"
             android:exported="false" />
-
         <activity
             android:name=".QuestionsActivity"
             android:exported="false" />
-
         <activity
             android:name=".TestActivity"
             android:exported="false" />
