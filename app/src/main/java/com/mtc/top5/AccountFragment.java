@@ -1,5 +1,6 @@
 package com.mtc.top5;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  */
 public class AccountFragment extends Fragment {
     private LinearLayout logoutB;
+    private  Dialog progressDialog;
+    private TextView dialogText;
     private TextView profile_img_text, name, score, rank;
     private LinearLayout leaderB, profileB,bookmarksB;
     private BottomNavigationView bottomNavigationView;
@@ -72,11 +76,58 @@ public class AccountFragment extends Fragment {
         initiViews(view);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
 
+        progressDialog = new Dialog(getContext());
+        progressDialog.setContentView(R.layout.dialog_layout);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogText = progressDialog.findViewById(R.id.dialog_text);
+        dialogText.setText("Loading...");
+        progressDialog.show();
+
+
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("My Account");
-        //String UserName= MyThread.myProfile.getName();
-        //profile_img_text.setText(userName.toUpperCase().substring(0,1));
-        //name.setText(userName);
-        //score.setText(String.valueOf(MyThread.myPerformance.getScore()));
+        String UserName= MyThread.myProfile.getEmail();
+        System.out.println(UserName);
+        profile_img_text.setText(UserName.toUpperCase().substring(0,1));
+        name.setText(UserName);
+        score.setText(String.valueOf(MyThread.myPerformance.getScore()));
+        if(MyThread.g_usersList.size() == 0)//means we havent fetched top users yet
+        {
+            MyThread.getTopUsers(getContext(),new MyCompleteListener() {
+                @Override
+                public void onSuccess() {
+
+
+                    if(MyThread.myPerformance.getScore()!=0) {
+                        progressDialog.show();
+                        if (!MyThread.isMeonTopList) {
+                            calculateRank();
+                        }
+                        score.setText("Score: " + MyThread.myPerformance.getScore());
+                        rank.setText("Rank: " + MyThread.myPerformance.getRank());
+                    }
+                    progressDialog.dismiss();
+
+
+                }
+
+                @Override
+                public void onFailure() {
+                    Toast.makeText(getContext(), "Something went wrong",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+
+                }
+            });
+
+        }
+        else
+        {
+
+            score.setText("Score: " + MyThread.myPerformance.getScore());
+            if(MyThread.myPerformance.getScore() != 0)
+                rank.setText("Rank: " + MyThread.myPerformance.getRank());
+            progressDialog.dismiss();
+        }
 
         logoutB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +171,26 @@ public class AccountFragment extends Fragment {
         bookmarksB =view.findViewById(R.id.bookmarkB);
         profileB =view.findViewById(R.id.profileB);
         bottomNavigationView = getActivity().findViewById(R.id.bottom_nav_bar);
+
+    }
+    private void calculateRank()
+    {
+
+        int lowTopScore =  MyThread.g_usersList.get(MyThread.g_usersList.size() - 1 ).getScore();//20th users score
+        int remaining_users =MyThread.g_usersCount -20;
+        int userSlot = MyThread.myPerformance.getScore()*remaining_users/ lowTopScore;
+        int rank;
+        if  (lowTopScore != MyThread.myPerformance.getScore())
+        {
+            rank = MyThread.g_usersCount - userSlot;
+
+        }
+        else
+        {
+            rank = 21;
+        }
+
+        MyThread.myPerformance.setRank(rank);
 
     }
 }

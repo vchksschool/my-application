@@ -26,8 +26,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etName, etEmail, etPassword, etReenterPassword;
     private TextView tvStatus;
     private Button btnRegister;
+
     private String URL = "http://51.38.80.233/victory/register.php";
-    private String name, email, password, reenterPassword;
+    public static String name, email, password, reenterPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,10 +57,14 @@ public class SignUpActivity extends AppCompatActivity {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    if (response.equals("success")) {
+                    if (response.contains("success")) {
 
-                        tvStatus.setText("Successfully registered.");
+                        tvStatus.setText("Verify your email");
+
                         btnRegister.setClickable(false);
+                        Intent intent = new Intent(SignUpActivity.this, VerificationCode.class);
+                        startActivity(intent);
+                        finish();
                         
                     } else{
                         tvStatus.setText(response);                    }

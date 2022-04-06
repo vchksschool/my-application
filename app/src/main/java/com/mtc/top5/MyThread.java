@@ -7,6 +7,7 @@ import android.os.Build;
 import android.widget.Toast;
 
 import java.net.URL;
+import java.security.KeyStore;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -45,7 +46,10 @@ class MyThread extends Fragment implements Runnable{
     public static int currentCatNumDB = 0;
     public static ArrayList<ArrayList<String>> listOfLists = new ArrayList<ArrayList<String>>();
     public static int qlength;
-
+    public static boolean isMeonTopList = false;//checks if user is in top 10 or not
+    public static  RankModel myPerformance = new RankModel("NULL",0,-1);
+    public static  List<RankModel> g_usersList = new ArrayList<>();
+    public static int g_usersCount = 0;
     public static Map<String, String> categoryNumber_numberOfQuestions = new HashMap<String, String>();//remember you set these values inside as a string
     public static List<QuestionModel> g_quesList = new ArrayList<>();
     public static int g_selected_cat_index = 0;
@@ -58,8 +62,90 @@ class MyThread extends Fragment implements Runnable{
     public static final int UNANSWERED = 0;
     public static final int ANSWERED =  0;
     public static final int REVIEW = 0;
+    public static ProfileModel myProfile = new ProfileModel("Null","Null",-1);
 
-    public static ProfileModel myProfile = new ProfileModel(null);
+    public static void getTopUsers(Context c, MyCompleteListener completeListener )
+    {
+        g_usersList.clear();
+        RequestQueue requestQueue = Volley.newRequestQueue(c);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( "http://51.38.80.233/victory/loadtopplayers.php", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                g_usersCount = response.length();
+
+                System.out.println("array got");
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+
+
+                        JSONObject userdata = response.getJSONObject(i);
+
+                        String totalScore = userdata.getString("total_score").toString();
+                        String id = userdata.getString("id").toString();
+                        String name = userdata.getString("username").toString();
+                        System.out.println(name);
+                        System.out.println(totalScore);
+
+
+                        g_usersList.add(new RankModel(name, Integer.valueOf(totalScore), i+1));
+
+                        System.out.println(g_usersList);
+                        System.out.println("in get top users");
+                        if(myProfile.getUid() == Integer.valueOf(id))
+                        {
+
+                            isMeonTopList = true;
+                            myPerformance.setRank(i+1);
+                        }
+
+
+
+
+
+                    } catch (JSONException e) {
+                        System.out.println("nah didnt work");
+
+
+                        e.printStackTrace();
+                    }
+
+
+                }
+                g_usersCount = response.length();
+                completeListener.onSuccess();
+                System.out.println(Thread.currentThread().getName() + " completed.");
+                //latch.countDown();
+
+
+            }
+
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Volley error");
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+
+
+        /*TODO:String myEmail = myProfile.getEmail();
+         for i = 1 to ,,
+        if(myuid.compareTo(email in json object)==0)
+        {
+            isMeonTopList= true;
+            myPerformance.setRank(i);
+
+            i++
+            rank = i
+        }*/
+
+        //fetch top 20 users using loadtopusers.php
+
+    }
+
 
    /* public static void saveResult(int score, MyCompleteListenr completeListener)
     {
@@ -75,9 +161,11 @@ class MyThread extends Fragment implements Runnable{
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("success")) {
 
-                    System.out.println("Successful.");
+                System.out.println(response);
+                if (response.contains("success")) {
+
+                    System.out.println("yes");
                     completeListener.onSuccess();
 
 
@@ -103,7 +191,9 @@ class MyThread extends Fragment implements Runnable{
 
                 data.put("game_finished_date", date);
                 data.put("points_earned",String.valueOf(score));
-                data.put("email", myProfile.getEmail());
+                data.put("id", String.valueOf(myProfile.getUid()));
+                MyThread.myPerformance.setName(myProfile.getEmail());
+                MyThread.myPerformance.setScore(score);
                 //data.put("email",email);
                 return data;
             }
@@ -113,7 +203,7 @@ class MyThread extends Fragment implements Runnable{
     }
     public static void getUserData(MyCompleteListener completeListener)
     {
-        //myProfile.setName("name");
+        //myProfile.setName("name");ffr
         //myProfile.setEmail("email");
     }
     public static void setj()

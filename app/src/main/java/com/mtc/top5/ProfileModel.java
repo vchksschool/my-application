@@ -2,9 +2,11 @@ package com.mtc.top5;
 
 public class ProfileModel
 {
-    public ProfileModel(String email) {
+    public ProfileModel(String email, String name,int UID) {
 
         this.email = email;
+        this.name =name;
+        this.uid = UID;
 
 
     }
@@ -33,6 +35,8 @@ public class ProfileModel
     }
 
     public void setUid(int uid) {
+
+        System.out.println("uid changed");
         this.uid = uid;
     }
 
