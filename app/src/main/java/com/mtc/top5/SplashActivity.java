@@ -11,9 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.mtc.top5.R;
-
-import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class SplashActivity extends AppCompatActivity {
@@ -29,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         final CountDownLatch latch = new CountDownLatch(1);
         mContext = this;
 
-        MyThread thread = new MyThread(latch, mContext);
+        DBqueries thread = new DBqueries(latch, mContext);
 
         new Thread(thread).start();
         try {

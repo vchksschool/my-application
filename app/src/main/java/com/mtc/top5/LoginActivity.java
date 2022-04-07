@@ -1,9 +1,7 @@
 package com.mtc.top5;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,11 +76,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     public void getscore()
-    {   System.out.println(String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(MyThread.myProfile.getUid())));
-        System.out.println("YOUR UID IS" + MyThread.myProfile.getUid());
+    {   System.out.println(String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(DBqueries.myProfile.getUid())));
+        System.out.println("YOUR UID IS" + DBqueries.myProfile.getUid());
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(MyThread.myProfile.getUid())), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(DBqueries.myProfile.getUid())), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 System.out.println("array got");
@@ -96,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         String score = categories.getString("total_score").toString();
 
-                        MyThread.myPerformance.setScore(Integer.valueOf(score));
+                        DBqueries.myPerformance.setScore(Integer.valueOf(score));
 
 
 
@@ -143,9 +140,9 @@ public class LoginActivity extends AppCompatActivity {
                         String name = categories.getString("username").toString();
                         String uid = categories.getString("id").toString();
 
-                        MyThread.myProfile.setName(name);
-                        MyThread.myProfile.setUid(Integer.valueOf(uid));
-                        MyThread.myPerformance.setName(name);
+                        DBqueries.myProfile.setName(name);
+                        DBqueries.myProfile.setUid(Integer.valueOf(uid));
+                        DBqueries.myPerformance.setName(name);
                         completeListener.onSuccess();
 
 

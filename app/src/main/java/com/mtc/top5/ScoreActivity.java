@@ -3,11 +3,7 @@ package com.mtc.top5;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -105,9 +99,9 @@ public class ScoreActivity extends AppCompatActivity {
     private void loadData()
     {
         int correctQ = 0, wrongQ= 0, unattemptQ = 0;
-        for( int i = 0; i < MyThread.g_quesList.size();i++)
+        for(int i = 0; i < DBqueries.g_quesList.size(); i++)
         {
-            if(MyThread.g_quesList.get(i).getSelectedAns() == -1)
+            if(DBqueries.g_quesList.get(i).getSelectedAns() == -1)
             {
                 //System.out.println(MyThread.g_quesList.get(i).getQuestion());
                 //System.out.println(MyThread.g_quesList.get(i).getSelectedAns());
@@ -127,9 +121,9 @@ public class ScoreActivity extends AppCompatActivity {
                 //System.out.println(QuestionsAdapter.orderedlistOfLists.get(i));
                 //System.out.println(QuestionsAdapter.currentoption);
                 ///Above was pseudocode i used to plan the correct answer check. The code below ensures that a random position is aske for and the answer given by the user corresponds to that position
-                if(MyThread.g_quesList.get(i).getCorrectAns() == 1)
+                if(DBqueries.g_quesList.get(i).getCorrectAns() == 1)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -145,9 +139,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(MyThread.g_quesList.get(i).getCorrectAns() == 2)
+                if(DBqueries.g_quesList.get(i).getCorrectAns() == 2)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -162,9 +156,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(MyThread.g_quesList.get(i).getCorrectAns() == 3)
+                if(DBqueries.g_quesList.get(i).getCorrectAns() == 3)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -179,9 +173,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(MyThread.g_quesList.get(i).getCorrectAns() == 4)
+                if(DBqueries.g_quesList.get(i).getCorrectAns() == 4)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -196,9 +190,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(MyThread.g_quesList.get(i).getCorrectAns() == 5)
+                if(DBqueries.g_quesList.get(i).getCorrectAns() == 5)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -228,7 +222,7 @@ public class ScoreActivity extends AppCompatActivity {
         correctQTV.setText(String.valueOf(correctQ));
         wrongQTV.setText(String.valueOf(wrongQ));
         unattemptedQTV.setText(String.valueOf(unattemptQ));
-        totalQTV.setText(String.valueOf(MyThread.g_quesList.size()));
+        totalQTV.setText(String.valueOf(DBqueries.g_quesList.size()));
 
         //int finalScore = (correctQ * 100)/MyThread.g_quesList.size();
         int finalScore = correctQ;
@@ -242,10 +236,10 @@ public class ScoreActivity extends AppCompatActivity {
     }
     private void  reAttempt()
     {
-        for (int i =0; i < MyThread.g_quesList.size(); i++)
+        for (int i = 0; i < DBqueries.g_quesList.size(); i++)
         {
-            MyThread.g_quesList.get(i).setSelectedAns(-1);
-            MyThread.g_quesList.get(i).setStatus(MyThread.NOT_VISITED);
+            DBqueries.g_quesList.get(i).setSelectedAns(-1);
+            DBqueries.g_quesList.get(i).setStatus(DBqueries.NOT_VISITED);
         }
         Intent intent = new Intent(ScoreActivity.this,StartQuizActivity.class);
         startActivity(intent);
@@ -253,7 +247,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
     private void saveResult()
     {
-        MyThread.saveResult(score,this, new MyCompleteListener() {
+        DBqueries.saveResult(score,this, new MyCompleteListener() {
             @Override
             public void onSuccess() {
                 progressDialog.dismiss();

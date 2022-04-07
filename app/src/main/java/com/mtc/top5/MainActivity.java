@@ -1,32 +1,22 @@
 package com.mtc.top5;
 
-import android.app.ActionBar;
-import android.app.Notification;
 import android.content.Context;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
                     switch(menuItem.getItemId())
                     {
                         case R.id.navigation_home:
-                            setFragement(new CategoryFragment());
+                            setFragment(new CategoryFragment());
                             return true;
 
                         case R.id.navigation_leaderboard:
-                            setFragement(new LeaderboardFragment());
+                            setFragment(new LeaderboardFragment());
                             return true;
 
 
                         case R.id.navigation_account:
-                            setFragement(new AccountFragment());
+                            setFragment(new AccountFragment());
                             return true;
 
                     }
@@ -114,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         //else{
             //setfragement
         //}
-        setFragement(new CategoryFragment());
+        setFragment(new CategoryFragment());
     }
 
 
@@ -137,25 +127,25 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.nav_home:
-                setFragement(new CategoryFragment());
+                setFragment(new CategoryFragment());
 
 
                 return true;
 
             case R.id.nav_leaderboard:
-                setFragement(new LeaderboardFragment());
+                setFragment(new LeaderboardFragment());
                 return true;
 
 
             case R.id.nav_account:
-                setFragement(new AccountFragment());
+                setFragment(new AccountFragment());
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-    private void setFragement(Fragment fragement)
+    private void setFragment(Fragment fragement)
     {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(main_frame.getId(),fragement);

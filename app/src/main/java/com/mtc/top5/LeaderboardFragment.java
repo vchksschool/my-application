@@ -14,8 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LeaderboardFragment#newInstance} factory method to
@@ -96,28 +94,28 @@ public class LeaderboardFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         usersView.setLayoutManager(layoutManager);
-        adapter = new RankAdapter(MyThread.g_usersList);
+        adapter = new RankAdapter(DBqueries.g_usersList);
         usersView.setAdapter(adapter);
 
 
 
-        MyThread.getTopUsers(getContext(), new MyCompleteListener() {
+        DBqueries.getTopUsers(getContext(), new MyCompleteListener() {
             @Override
             public void onSuccess() {
 
                 adapter.notifyDataSetChanged();
                 System.out.println("breach");
-                if(MyThread.myPerformance.getScore()!=0) {
+                if(DBqueries.myPerformance.getScore()!=0) {
                     System.out.println("breach1");
-                    if (!MyThread.isMeonTopList) {
+                    if (!DBqueries.isMeonTopList) {
                         System.out.println("breach2");
                         calculateRank();
                     }
                     System.out.println("got here");
-                    System.out.println(MyThread.myPerformance.getRank() );
-                    totalUsersTV.setText("Total Users: "+ MyThread.g_usersCount);
-                    myScoreTV.setText("Score: " + MyThread.myPerformance.getScore());
-                    myRankTV.setText("Rank: " + MyThread.myPerformance.getRank());
+                    System.out.println(DBqueries.myPerformance.getRank() );
+                    totalUsersTV.setText("Total Users: "+ DBqueries.g_usersCount);
+                    myScoreTV.setText("Score: " + DBqueries.myPerformance.getScore());
+                    myRankTV.setText("Rank: " + DBqueries.myPerformance.getRank());
                 }
                 System.out.println("breach");
                 progressDialog.dismiss();
@@ -134,9 +132,9 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-        totalUsersTV.setText("Total Users: "+ MyThread.g_usersCount);
-        myImgTextTV.setText(MyThread.myPerformance.getName().toUpperCase().substring(0,1));
-        myScoreTV.setText(String.valueOf(MyThread.myPerformance.getScore()));
+        totalUsersTV.setText("Total Users: "+ DBqueries.g_usersCount);
+        myImgTextTV.setText(DBqueries.myPerformance.getName().toUpperCase().substring(0,1));
+        myScoreTV.setText(String.valueOf(DBqueries.myPerformance.getScore()));
         return view;
     }
     private void initViews(View view)
@@ -151,14 +149,14 @@ public class LeaderboardFragment extends Fragment {
     }
     private void calculateRank()
     {
-        System.out.println(MyThread.g_usersList);
-        int lowTopScore =  MyThread.g_usersList.get(MyThread.g_usersList.size() - 1 ).getScore();//20th users score.1
-        int remaining_users =MyThread.g_usersCount -20;//0
-        int userSlot = MyThread.myPerformance.getScore()*remaining_users/ lowTopScore;
+        System.out.println(DBqueries.g_usersList);
+        int lowTopScore =  DBqueries.g_usersList.get(DBqueries.g_usersList.size() - 1 ).getScore();//20th users score.1
+        int remaining_users = DBqueries.g_usersCount -20;//0
+        int userSlot = DBqueries.myPerformance.getScore()*remaining_users/ lowTopScore;
         int rank;
-        if  (lowTopScore != MyThread.myPerformance.getScore())
+        if  (lowTopScore != DBqueries.myPerformance.getScore())
         {
-            rank = MyThread.g_usersCount - userSlot;
+            rank = DBqueries.g_usersCount - userSlot;
 
         }
         else
@@ -166,7 +164,7 @@ public class LeaderboardFragment extends Fragment {
             rank = 21;
         }
 
-        MyThread.myPerformance.setRank(rank);
+        DBqueries.myPerformance.setRank(rank);
         System.out.println(rank);
 
     }

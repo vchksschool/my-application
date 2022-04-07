@@ -71,14 +71,14 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    MyThread.g_quesList.clear();
-                    MyThread.NoOfQues = (position+1)*10;
-                    MyThread.test_index = position;
-                    MyThread.currentCatNumDB = MyThread.catList.get(cat_index).getCatNumDB();
+                    DBqueries.g_quesList.clear();
+                    DBqueries.NoOfQues = (position+1)*10;
+                    DBqueries.test_index = position;
+                    DBqueries.currentCatNumDB = DBqueries.catList.get(cat_index).getCatNumDB();
                     System.out.println("Below is the current catnumber");
-                    System.out.println(MyThread.currentCatNumDB);
+                    System.out.println(DBqueries.currentCatNumDB);
 
-                    MyThread.loadquestions();
+                    DBqueries.loadquestions();
                     Intent intent = new Intent(itemView.getContext(), StartQuizActivity2.class);
                     itemView.getContext().startActivity(intent);
                 }

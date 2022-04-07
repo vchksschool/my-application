@@ -7,8 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -156,7 +154,7 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
 
                 btn.setBackgroundResource(R.drawable.selected_btn);//sets selected answer to corresponding questions
                 prevSelectedB = btn;
-                MyThread.g_quesList.get(quesID).setSelectedAns(option_num);
+                DBqueries.g_quesList.get(quesID).setSelectedAns(option_num);
 
             }
             else
@@ -164,16 +162,16 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
                 if (prevSelectedB.getId() == btn.getId())//if button clckedd by user is clicked again this will unselect it
                 {
                     btn.setBackgroundResource(R.drawable.unselected_btn);
-                    MyThread.g_quesList.get(quesID).setSelectedAns(-1);
+                    DBqueries.g_quesList.get(quesID).setSelectedAns(-1);
                     prevSelectedB = null;
                 }
                 else// if button clicked is different from previously selected question
                 {
                     prevSelectedB.setBackgroundResource(R.drawable.unselected_btn);
                     btn.setBackgroundResource(R.drawable.selected_btn);
-                    MyThread.g_quesList.get(quesID).setSelectedAns(option_num);
-                    System.out.println(MyThread.g_quesList.get(quesID).getQuestion());
-                    System.out.println(MyThread.g_quesList.get(quesID).getSelectedAns());
+                    DBqueries.g_quesList.get(quesID).setSelectedAns(option_num);
+                    System.out.println(DBqueries.g_quesList.get(quesID).getQuestion());
+                    System.out.println(DBqueries.g_quesList.get(quesID).getSelectedAns());
                     prevSelectedB = btn;
 
                 }
@@ -184,7 +182,7 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
 
         private void setOption(Button btn, int option_num, int quesID)
         {   currentoption= option_num;
-            if(MyThread.g_quesList.get(quesID).getSelectedAns() == option_num)
+            if(DBqueries.g_quesList.get(quesID).getSelectedAns() == option_num)
             {
                 btn.setBackgroundResource(R.drawable.selected_btn);
                 //MyThread.g_quesList.get(quesID).setSelectedAns(option_num);

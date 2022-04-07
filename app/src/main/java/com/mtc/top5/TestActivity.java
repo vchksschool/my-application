@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -39,11 +37,11 @@ public class TestActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         final CountDownLatch latch = new CountDownLatch(1);
         mContext = this;
-        MyThread a = new MyThread(latch, mContext);
+        DBqueries a = new DBqueries(latch, mContext);
         catList = a.getcurrentFinalCat();
 
         int cat_index = getIntent().getIntExtra("CAT_INDEX", 0);
-        MyThread.g_selected_cat_index = cat_index;
+        DBqueries.g_selected_cat_index = cat_index;
         System.out.println(cat_index);
         getSupportActionBar().setTitle(catList.get(cat_index).getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,9 +66,9 @@ public class TestActivity extends AppCompatActivity {
     {
         testList = new ArrayList<>();
 
-        MyThread.currentCatNumDB = MyThread.catList.get(cat_index).getCatNumDB();
-        MyThread.setj();
-        String looplength = Integer.toString(MyThread.j);
+        DBqueries.currentCatNumDB = DBqueries.catList.get(cat_index).getCatNumDB();
+        DBqueries.setj();
+        String looplength = Integer.toString(DBqueries.j);
         System.out.println(looplength+"before");
         looplength = looplength.substring(0,1);
         //fix this

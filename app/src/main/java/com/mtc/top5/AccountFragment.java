@@ -85,25 +85,25 @@ public class AccountFragment extends Fragment {
         progressDialog.show();
 
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("My Account");
-        String UserName= MyThread.myProfile.getName();
+        String UserName= DBqueries.myProfile.getName();
         System.out.println(UserName);
         profile_img_text.setText(UserName.toUpperCase().substring(0,1));
         name.setText(UserName);
-        score.setText(String.valueOf(MyThread.myPerformance.getScore()));
-        if(MyThread.g_usersList.size() == 0)//means we havent fetched top users yet
+        score.setText(String.valueOf(DBqueries.myPerformance.getScore()));
+        if(DBqueries.g_usersList.size() == 0)//means we havent fetched top users yet
         {
-            MyThread.getTopUsers(getContext(),new MyCompleteListener() {
+            DBqueries.getTopUsers(getContext(),new MyCompleteListener() {
                 @Override
                 public void onSuccess() {
 
 
-                    if(MyThread.myPerformance.getScore()!=0) {
+                    if(DBqueries.myPerformance.getScore()!=0) {
                         progressDialog.show();
-                        if (!MyThread.isMeonTopList) {
+                        if (!DBqueries.isMeonTopList) {
                             calculateRank();
                         }
-                        score.setText("Score: " + MyThread.myPerformance.getScore());
-                        rank.setText("Rank: " + MyThread.myPerformance.getRank());
+                        score.setText("Score: " + DBqueries.myPerformance.getScore());
+                        rank.setText("Rank: " + DBqueries.myPerformance.getRank());
                     }
                     progressDialog.dismiss();
 
@@ -122,9 +122,9 @@ public class AccountFragment extends Fragment {
         else
         {
 
-            score.setText("Score: " + MyThread.myPerformance.getScore());
-            if(MyThread.myPerformance.getScore() != 0)
-                rank.setText("Rank: " + MyThread.myPerformance.getRank());
+            score.setText("Score: " + DBqueries.myPerformance.getScore());
+            if(DBqueries.myPerformance.getScore() != 0)
+                rank.setText("Rank: " + DBqueries.myPerformance.getRank());
             progressDialog.dismiss();
         }
 
@@ -175,13 +175,13 @@ public class AccountFragment extends Fragment {
     private void calculateRank()
     {
 
-        int lowTopScore =  MyThread.g_usersList.get(MyThread.g_usersList.size() - 1 ).getScore();//20th users score
-        int remaining_users =MyThread.g_usersCount -20;
-        int userSlot = MyThread.myPerformance.getScore()*remaining_users/ lowTopScore;
+        int lowTopScore =  DBqueries.g_usersList.get(DBqueries.g_usersList.size() - 1 ).getScore();//20th users score
+        int remaining_users = DBqueries.g_usersCount -20;
+        int userSlot = DBqueries.myPerformance.getScore()*remaining_users/ lowTopScore;
         int rank;
-        if  (lowTopScore != MyThread.myPerformance.getScore())
+        if  (lowTopScore != DBqueries.myPerformance.getScore())
         {
-            rank = MyThread.g_usersCount - userSlot;
+            rank = DBqueries.g_usersCount - userSlot;
 
         }
         else
@@ -189,7 +189,7 @@ public class AccountFragment extends Fragment {
             rank = 21;
         }
 
-        MyThread.myPerformance.setRank(rank);
+        DBqueries.myPerformance.setRank(rank);
 
     }
 }

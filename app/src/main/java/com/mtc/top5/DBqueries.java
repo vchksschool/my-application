@@ -2,14 +2,10 @@ package com.mtc.top5;
 
 
 import android.content.Context;
-import android.icu.number.IntegerWidth;
 import android.os.Build;
 import android.widget.Toast;
 
-import java.net.URL;
-import java.security.KeyStore;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.annotation.RequiresApi;
@@ -23,21 +19,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnCompleteListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-class MyThread extends Fragment implements Runnable{
+class DBqueries extends Fragment implements Runnable{
     public static List<CategoryModel> catList;
     public static int NoOfQues = 0;
     private static String URL = "http://51.38.80.233/victory/save_quiz.php";
@@ -197,8 +191,8 @@ class MyThread extends Fragment implements Runnable{
                 data.put("game_finished_date", date);
                 data.put("points_earned",String.valueOf(score));
                 data.put("id", String.valueOf(myProfile.getUid()));
-                MyThread.myPerformance.setName(myProfile.getEmail());
-                MyThread.myPerformance.setScore(score);
+                DBqueries.myPerformance.setName(myProfile.getEmail());
+                DBqueries.myPerformance.setScore(score);
 
                 return data;
             }
@@ -379,7 +373,7 @@ class MyThread extends Fragment implements Runnable{
     CountDownLatch latch;
     private Context c;
 
-    MyThread(CountDownLatch latch, Context context) {
+    DBqueries(CountDownLatch latch, Context context) {
 
         this.latch = latch;
         c = context;

@@ -1,15 +1,13 @@
 package com.mtc.top5;
 
-import static com.mtc.top5.MyThread.catList;
-import static com.mtc.top5.MyThread.g_quesList;
-import static com.mtc.top5.MyThread.g_selected_cat_index;
-import static com.mtc.top5.MyThread.g_selected_quiz_index;
+import static com.mtc.top5.DBqueries.catList;
+import static com.mtc.top5.DBqueries.g_quesList;
+import static com.mtc.top5.DBqueries.g_selected_cat_index;
+import static com.mtc.top5.DBqueries.g_selected_quiz_index;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +16,10 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
