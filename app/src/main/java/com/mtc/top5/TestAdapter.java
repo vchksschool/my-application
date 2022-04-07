@@ -50,8 +50,9 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
             super(itemView);
 
             testNo = itemView.findViewById(R.id.testNo);
-            topScore = itemView.findViewById(R.id.scoretext);
-            progressBar = itemView.findViewById(R.id.testProgressBar);
+            //topScore = itemView.findViewById(R.id.scoretext);
+            //
+            //progressBar = itemView.findViewById(R.id.testProgressBar);
             /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,8 +66,8 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
         private  void setData(int position, int progress)
         {
             testNo.setText(String.valueOf((position+1)*10) + " Minute Quiz");
-            topScore.setText(String.valueOf(progress) + " %");
-            progressBar.setProgress(progress);
+            //topScore.setText(String.valueOf(progress) + " %");
+            //progressBar.setProgress(progress);
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {

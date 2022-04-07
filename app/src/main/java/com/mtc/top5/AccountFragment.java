@@ -84,9 +84,8 @@ public class AccountFragment extends Fragment {
         dialogText.setText("Loading...");
         progressDialog.show();
 
-
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("My Account");
-        String UserName= MyThread.myProfile.getEmail();
+        String UserName= MyThread.myProfile.getName();
         System.out.println(UserName);
         profile_img_text.setText(UserName.toUpperCase().substring(0,1));
         name.setText(UserName);

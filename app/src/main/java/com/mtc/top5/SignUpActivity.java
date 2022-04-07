@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         else if(!name.equals("") && !email.equals("") && !password.equals("")){
 
-            tvStatus.setText("Succesfully registered");
+            
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

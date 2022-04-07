@@ -20,7 +20,12 @@ public class StartQuizActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_start_quiz2);
 
         init();
-
+        String q1 = Integer.toString(MyThread.NoOfQues);
+        q1 = q1.substring(0,1);
+        testNo.setText("Quiz. " + q1 );
+        totalQ.setText(String.valueOf(MyThread.NoOfQues));
+        time.setText(String.valueOf(MyThread.NoOfQues));
+        bestScore.setText(String.valueOf(MyThread.myPerformance.getScore()));
     }
 
 

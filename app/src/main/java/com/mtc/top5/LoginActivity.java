@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void getscore()
     {   System.out.println(String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(MyThread.myProfile.getUid())));
+        System.out.println("YOUR UID IS" + MyThread.myProfile.getUid());
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(MyThread.myProfile.getUid())), new Response.Listener<JSONArray>() {

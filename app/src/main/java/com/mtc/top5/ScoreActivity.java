@@ -1,16 +1,25 @@
 package com.mtc.top5;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +31,9 @@ public class ScoreActivity extends AppCompatActivity {
     private long timeTaken;
     private Dialog progressDialog;
     public  int score;
+
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
     public MyCompleteListener completeListener;
 
     private TextView dialogText;
@@ -64,13 +76,20 @@ public class ScoreActivity extends AppCompatActivity {
         reAttemptB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //extra feature not yet implemented. also not implemented bookmaked questions or question grid
                 reAttempt();
+
             }
         });
+
+
         saveResult();
     }
     private void init()
     {
+
+        frameLayout = findViewById(R.id.frameLayout);
+        bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         scoreTV = findViewById(R.id.score);
         timeTV = findViewById(R.id.time);
         totalQTV = findViewById(R.id.totalQ);
@@ -107,6 +126,7 @@ public class ScoreActivity extends AppCompatActivity {
                 //System.out.println(QuestionsAdapter.textviewlistOfLists.get(i));
                 //System.out.println(QuestionsAdapter.orderedlistOfLists.get(i));
                 //System.out.println(QuestionsAdapter.currentoption);
+                ///Above was pseudocode i used to plan the correct answer check. The code below ensures that a random position is aske for and the answer given by the user corresponds to that position
                 if(MyThread.g_quesList.get(i).getCorrectAns() == 1)
                 {
                     if (QuestionsAdapter.textviewlistOfLists.get(i).get(MyThread.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(MyThread.g_quesList.get(i).getCorrectAns()-1))
@@ -241,11 +261,21 @@ public class ScoreActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(){
-                Toast.makeText(ScoreActivity.this, "Something went wrong",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ScoreActivity.this, "Something went wrong",Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
         });
         progressDialog.dismiss();
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home);{
+            ScoreActivity.this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

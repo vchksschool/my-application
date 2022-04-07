@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class LeaderboardFragment extends Fragment {
     private RankAdapter adapter;
     private  Dialog progressDialog;
     private TextView dialogText;
+    private FrameLayout frameLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,7 +98,7 @@ public class LeaderboardFragment extends Fragment {
         usersView.setLayoutManager(layoutManager);
         adapter = new RankAdapter(MyThread.g_usersList);
         usersView.setAdapter(adapter);
-//////////////////////////
+
 
 
         MyThread.getTopUsers(getContext(), new MyCompleteListener() {
@@ -139,6 +141,7 @@ public class LeaderboardFragment extends Fragment {
     }
     private void initViews(View view)
     {
+        frameLayout = view.findViewById(R.id.frameLayout);
         totalUsersTV = view.findViewById(R.id.total_users);
         myImgTextTV = view.findViewById(R.id.img_text);
         myScoreTV = view.findViewById(R.id.total_score);

@@ -27,6 +27,7 @@
         <activity
             android:name=".QuestionsActivity"
             android:exported="false" />
+
         <activity
             android:name=".TestActivity"
             android:exported="false" />

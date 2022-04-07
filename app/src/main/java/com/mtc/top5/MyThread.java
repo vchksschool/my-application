@@ -170,13 +170,15 @@ class MyThread extends Fragment implements Runnable{
 
 
                 } else{
-                    System.out.println(response);
+
+                    Toast.makeText(c, response, Toast.LENGTH_SHORT).show();
                     completeListener.onFailure();       }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(c, error.toString().trim(), Toast.LENGTH_SHORT).show();
+                completeListener.onFailure();
             }
         }){
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -188,13 +190,16 @@ class MyThread extends Fragment implements Runnable{
                     date = String.valueOf(LocalDate.now());
                     System.out.println(date);
                 }
+                else{
+                    date = "2022-04-06";
+                }
 
                 data.put("game_finished_date", date);
                 data.put("points_earned",String.valueOf(score));
                 data.put("id", String.valueOf(myProfile.getUid()));
                 MyThread.myPerformance.setName(myProfile.getEmail());
                 MyThread.myPerformance.setScore(score);
-                //data.put("email",email);
+
                 return data;
             }
         };

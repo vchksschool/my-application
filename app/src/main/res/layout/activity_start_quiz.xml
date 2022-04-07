@@ -99,6 +99,7 @@
                     android:text="5"
                     android:layout_weight="1"
                     android:gravity="bottom"
+                    android:id="@+id/qtext"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
@@ -107,53 +108,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="120dp"
-            android:layout_height="160dp"
-            app:cardCornerRadius="5dp"
-            android:layout_weight="1"
-            app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
 
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="16dp"
-                >
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/award"
-
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Best Score"
-
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="80"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="120dp"
@@ -193,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 m"
+                    android:id="@+id/qtime"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:textSize="15sp"
