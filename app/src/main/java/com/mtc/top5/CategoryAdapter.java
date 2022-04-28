@@ -59,12 +59,12 @@ public class CategoryAdapter extends BaseAdapter {
 
 
         TextView catName = myView.findViewById(R.id.catName);
-        TextView noOfTests = myView.findViewById(R.id.no_of_tests);
+        //TextView noOfTests = myView.findViewById(R.id.no_of_tests);
 
         catName.setText(cat_list.get(position).getName());
 
-        noOfTests.setText(String.valueOf(cat_list.get(position).getNoOfTests()) +  " Tests");
-
+        //noOfTests.setText(String.valueOf(cat_list.get(position).getNoOfTests()) +  " Tests");
+        //Number of tests omitted
 
         return myView;
     }

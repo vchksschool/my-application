@@ -9,7 +9,7 @@ public class QuestionModel {
     private String optionD;
     private String optionE;
     private int status;
-    private int correctAns;
+    private int userAnswerPosition;
     private  int selectedAns;
 
 
@@ -92,23 +92,23 @@ public class QuestionModel {
         this.optionE = optionE;
     }
 
-    public int getCorrectAns() {
-        return correctAns;
+    public int getUserAnswerPosition() {
+        return userAnswerPosition;
     }
 
-    public void setCorrectAns(int correctAns) {
-        this.correctAns = correctAns;
+    public void setUserAnswerPosition(int userAnswerPosition) {
+        this.userAnswerPosition = userAnswerPosition;
     }
 
 
-    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String optionE, int correctAns, int time, int selectedAns, int status, int optionforq) {
+    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String optionE, int userAnswerPosition, int time, int selectedAns, int status, int optionforq) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
         this.optionC = optionC;
         this.optionD = optionD;
         this.optionE = optionE;
-        this.correctAns = correctAns;
+        this.userAnswerPosition = userAnswerPosition;
         this.time = time;
         this.selectedAns = selectedAns;
         this.status = status;

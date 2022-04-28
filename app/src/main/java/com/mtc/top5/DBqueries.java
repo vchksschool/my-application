@@ -53,9 +53,9 @@ class DBqueries extends Fragment implements Runnable{
     public static int endindex;
     public static ArrayList<String> question_cat1;
     public static final int NOT_VISITED = 0;
-    public static final int UNANSWERED = 0;
-    public static final int ANSWERED =  0;
-    public static final int REVIEW = 0;
+    public static final int UNANSWERED = 1;
+    public static final int ANSWERED =  2;
+    public static final int REVIEW = 3;
     public static ProfileModel myProfile = new ProfileModel("Null","Null",-1);
 
     public static void getTopUsers(Context c, MyCompleteListener completeListener )
@@ -77,19 +77,21 @@ class DBqueries extends Fragment implements Runnable{
                         String totalScore = userdata.getString("total_score").toString();
                         String id = userdata.getString("id").toString();
                         String name = userdata.getString("username").toString();
-                        System.out.println(name);
-                        System.out.println(totalScore);
+                        //System.out.println(name);
+                        //System.out.println(totalScore);
 
+                        if (Integer.valueOf(totalScore) > 0) {
+                            g_usersList.add(new RankModel(name, Integer.valueOf(totalScore), i + 1));
 
-                        g_usersList.add(new RankModel(name, Integer.valueOf(totalScore), i+1));
+                            //System.out.println(g_usersList);
+                            //System.out.println("in get top users");
+                            if (myProfile.getUid() == Integer.valueOf(id)) {
 
-                        System.out.println(g_usersList);
-                        System.out.println("in get top users");
-                        if(myProfile.getUid() == Integer.valueOf(id))
-                        {
-
-                            isMeonTopList = true;
-                            myPerformance.setRank(i+1);
+                                isMeonTopList = true;
+                                myPerformance.setScore(Integer.valueOf(totalScore));
+                                myPerformance.setRank(i + 1);
+                                System.out.println("Rank set to"+ Integer.toString(i+1));
+                            }
                         }
 
 
@@ -107,7 +109,7 @@ class DBqueries extends Fragment implements Runnable{
                 }
                 g_usersCount = response.length();
                 completeListener.onSuccess();
-                System.out.println(Thread.currentThread().getName() + " completed.");
+                //System.out.println(Thread.currentThread().getName() + " completed.");
                 //latch.countDown();
 
 
@@ -192,7 +194,7 @@ class DBqueries extends Fragment implements Runnable{
                 data.put("points_earned",String.valueOf(score));
                 data.put("id", String.valueOf(myProfile.getUid()));
                 DBqueries.myPerformance.setName(myProfile.getEmail());
-                DBqueries.myPerformance.setScore(score);
+                DBqueries.myPerformance.setScore(DBqueries.myPerformance.getScore()+score);
 
                 return data;
             }
@@ -200,11 +202,54 @@ class DBqueries extends Fragment implements Runnable{
         RequestQueue requestQueue = Volley.newRequestQueue(c);
         requestQueue.add(stringRequest);
     }
-    public static void getUserData(MyCompleteListener completeListener)
+    public static void saveNewProfileData(String name, String password,Context c, MyCompleteListener completeListener)
     {
-        //myProfile.setName("name");ffr
-        //myProfile.setEmail("email");
+
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://51.38.80.233/victory/saveNewProfile.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    System.out.println(response);
+                    if (response.contains("success")) {
+
+                        System.out.println("yes");
+                        completeListener.onSuccess();
+
+
+                    } else {
+
+                        Toast.makeText(c, response, Toast.LENGTH_SHORT).show();
+                        completeListener.onFailure();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(c, error.toString().trim(), Toast.LENGTH_SHORT).show();
+                    completeListener.onFailure();
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> data = new HashMap<>();
+
+
+                    data.put("id", String.valueOf(myProfile.getUid()));
+                    data.put("username", name);
+                    data.put("password", password);
+
+                    return data;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(c);
+            requestQueue.add(stringRequest);
+
+
     }
+
+
     public static void setj()
     {
         int i = 0;
@@ -313,7 +358,7 @@ class DBqueries extends Fragment implements Runnable{
 
                 int randomans = ThreadLocalRandom.current().nextInt(1, 6);
                 //System.out.println(question+" "+ categorynum+ " "+ top1+ " "+ top2+ " "+top3 + " "+ top4+ " "+ top5 + " "+ Integer.toString(randomans));
-                g_quesList.add(new QuestionModel(question,top1,top2,top3,top4,top5,randomans, ((test_index+1)*10),-1,0 ,- 1));
+                g_quesList.add(new QuestionModel(question,top1,top2,top3,top4,top5,randomans, ((test_index+1)*10),-1,NOT_VISITED ,- 1));
                 //TODO:CREATE NEW COLUMN IN QUESTIONS_ANSWERS TABLE WHICH HAS A STATUS OF 0/-1 SET AND IS UPDATED EACH TIME A QUESTION IS ANSWERED. SEEK PART 22 FOR MORE INFO
 
 
@@ -363,7 +408,7 @@ class DBqueries extends Fragment implements Runnable{
                 answerc= ...
                 .
                 .
-                correctAns = questionanswers.getstrng("answer_" + h)
+                correctAns = questionanswers.getstrng("answer_"+ h)
                 g_queslist.add(new questionmodel(question, answera, answerb, answerc,answerd, answere, correctAns));
 
         */

@@ -25,6 +25,8 @@ public class ScoreActivity extends AppCompatActivity {
     private long timeTaken;
     private Dialog progressDialog;
     public  int score;
+    private int alreadyClicked = 0;
+
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
@@ -56,16 +58,21 @@ public class ScoreActivity extends AppCompatActivity {
 
 
         loadData();
-        QuestionsAdapter.orderedlistOfLists.clear();
-        QuestionsAdapter.textviewlistOfLists.clear();
-        //do:leaderboard button
 
-        viewAnsB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+        //QuestionsAdapter.orderedlistOfLists.clear();
+        //QuestionsAdapter.textviewlistOfLists.clear();
+
+            viewAnsB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ScoreActivity.this, AnswersActivity.class);
+                    startActivity(intent);
+
+
+
+                }
+            });
 
         reAttemptB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,9 +128,9 @@ public class ScoreActivity extends AppCompatActivity {
                 //System.out.println(QuestionsAdapter.orderedlistOfLists.get(i));
                 //System.out.println(QuestionsAdapter.currentoption);
                 ///Above was pseudocode i used to plan the correct answer check. The code below ensures that a random position is aske for and the answer given by the user corresponds to that position
-                if(DBqueries.g_quesList.get(i).getCorrectAns() == 1)
+                if(DBqueries.g_quesList.get(i).getUserAnswerPosition() == 1)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getUserAnswerPosition()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -139,9 +146,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(DBqueries.g_quesList.get(i).getCorrectAns() == 2)
+                if(DBqueries.g_quesList.get(i).getUserAnswerPosition() == 2)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getUserAnswerPosition()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -156,9 +163,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(DBqueries.g_quesList.get(i).getCorrectAns() == 3)
+                if(DBqueries.g_quesList.get(i).getUserAnswerPosition() == 3)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getUserAnswerPosition()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -173,9 +180,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(DBqueries.g_quesList.get(i).getCorrectAns() == 4)
+                if(DBqueries.g_quesList.get(i).getUserAnswerPosition() == 4)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getUserAnswerPosition()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -190,9 +197,9 @@ public class ScoreActivity extends AppCompatActivity {
                         System.out.println(QuestionsAdapter.currentoption);
                     }
                 }
-                if(DBqueries.g_quesList.get(i).getCorrectAns() == 5)
+                if(DBqueries.g_quesList.get(i).getUserAnswerPosition() == 5)
                 {
-                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getCorrectAns()-1))
+                    if (QuestionsAdapter.textviewlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getSelectedAns()-1)==QuestionsAdapter.orderedlistOfLists.get(i).get(DBqueries.g_quesList.get(i).getUserAnswerPosition()-1))
                     {
                         correctQ++;
                         System.out.println("right");
@@ -240,10 +247,14 @@ public class ScoreActivity extends AppCompatActivity {
         {
             DBqueries.g_quesList.get(i).setSelectedAns(-1);
             DBqueries.g_quesList.get(i).setStatus(DBqueries.NOT_VISITED);
+
         }
-        Intent intent = new Intent(ScoreActivity.this,StartQuizActivity.class);
+
+        QuestionsAdapter.orderedlistOfLists.clear();
+        QuestionsAdapter.textviewlistOfLists.clear();
+        Intent intent = new Intent(ScoreActivity.this,StartQuizActivity2.class);
         startActivity(intent);
-        finish();;
+        finish();
     }
     private void saveResult()
     {
@@ -267,6 +278,11 @@ public class ScoreActivity extends AppCompatActivity {
 
         if(item.getItemId() == android.R.id.home);{
             ScoreActivity.this.finish();
+
+            QuestionsAdapter.orderedlistOfLists.clear();
+            QuestionsAdapter.textviewlistOfLists.clear();
+            System.out.println("lists cleared");
+
         }
 
         return super.onOptionsItemSelected(item);

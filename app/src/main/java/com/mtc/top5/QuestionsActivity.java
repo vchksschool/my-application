@@ -1,5 +1,9 @@
 package com.mtc.top5;
 
+import static com.mtc.top5.DBqueries.ANSWERED;
+import static com.mtc.top5.DBqueries.NOT_VISITED;
+import static com.mtc.top5.DBqueries.REVIEW;
+import static com.mtc.top5.DBqueries.UNANSWERED;
 import static com.mtc.top5.DBqueries.catList;
 import static com.mtc.top5.DBqueries.g_quesList;
 import static com.mtc.top5.DBqueries.g_selected_cat_index;
@@ -8,6 +12,8 @@ import static com.mtc.top5.DBqueries.g_selected_quiz_index;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +24,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class QuestionsActivity extends AppCompatActivity{//ned to implement on touch listener if you want drag
@@ -39,16 +47,36 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
     private QuestionsAdapter quesAdapter;
     private CountDownTimer timer;
     private long timeLeft;
+    private GridQuestionAdapter gridAdapter;
+    private DrawerLayout draw;
+    private ImageButton drawcloseb;
+    private GridView qlistGV;
+    private ImageView mrkIMG;
+    public  static ArrayList<String> qlistcorrect;
+    public static ArrayList<ArrayList<String>> textviewlistOfLists =new ArrayList<ArrayList<String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questions);
-        //what is number + correctans + in the list. check if the answer selected is in the correct position that corresponds to the correctans position
+        setContentView(R.layout.questions_grid_layout);
 
 
         init();
+        for(int i = 0; i<g_quesList.size(); i++)
+        {
+            //adds in all questions to textview list (even unanswered ones)
+            QuestionModel qlist =g_quesList.get(i);
 
+            qlistcorrect = new ArrayList<String>();
+
+            qlistcorrect.add(qlist.getOptionA());
+            qlistcorrect.add(qlist.getOptionB());
+            qlistcorrect.add(qlist.getOptionC());
+            qlistcorrect.add(qlist.getOptionD());
+            qlistcorrect.add(qlist.getOptionE());
+            textviewlistOfLists.add(qlistcorrect);
+
+        }
 
         quesAdapter = new QuestionsAdapter(g_quesList);
         questionsView.setAdapter(quesAdapter);
@@ -58,6 +86,9 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         questionsView.setLayoutManager(layoutManager);
+        gridAdapter = new GridQuestionAdapter(this, g_quesList.size());//passing size of list to grid adapter
+        qlistGV.setAdapter(gridAdapter);//setting adapter to grid view
+
 
         //btn.setDrawingCacheEnabled(true);
         //btn.setOnTouchListener(questionsView);
@@ -84,9 +115,14 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
         prevQuesB = findViewById(R.id.prev_quesB);
         nextQuesB = findViewById(R.id.next_quesB);
         quesListB =findViewById(R.id.ques_list_gridB);
+        mrkIMG = findViewById(R.id.markimg);
+        qlistGV = findViewById(R.id.queslistGV);
         quesID = 0;
+        draw = findViewById(R.id.drawer_layout);
+        drawcloseb = findViewById(R.id.drawcloseB);
         tvQuesID.setText("1/"+String.valueOf(g_quesList.size()));
         catNameTV.setText(catList.get(g_selected_cat_index).getName());
+        g_quesList.get(0).setStatus(UNANSWERED); //SOLUTION TO FIRST FAILED TEST(SETS FIRST QUESTION UNANSWERED INSTEAD F NOT VISITED)
     }
 
     private void setSnapHelper()
@@ -98,11 +134,26 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
+                //CHANGES ON EACH SCROLL TO NEXT QUESTION
                 View view = snapHelper.findSnapView(recyclerView.getLayoutManager());
                 quesID = recyclerView.getLayoutManager().getPosition(view);
+                if(g_quesList.get(quesID).getStatus()== NOT_VISITED)
+                {
+                    //If question wasnt visited before ths then the questions status is set to unanswered
+                    g_quesList.get(quesID).setStatus(UNANSWERED);
+                }
+                //BELOW IF-ELSE MAKES SURE REVIEW ICON DOESNT STAY WHEN SCROLLING TO NEXT QUESTION
 
-                tvQuesID.setText(String.valueOf(quesID+1+  "/"+ String.valueOf(g_quesList.size())));
+                if (g_quesList.get(quesID).getStatus() == REVIEW)
+                {
+                    mrkIMG.setVisibility(View.VISIBLE);
+
+                }
+                else
+                {
+                    mrkIMG.setVisibility(View.GONE);
+                }
+                tvQuesID.setText(String.valueOf(quesID+1+  "/"+ String.valueOf(g_quesList.size()))) ;
             }
 
             @Override
@@ -142,7 +193,9 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
             @Override
             public void onClick(View v) {
                 g_quesList.get(quesID).setSelectedAns(-1);
-                quesAdapter.notifyDataSetChanged();//tells the recylr view that its data set has been changed so it will reinitiate after that
+                g_quesList.get(quesID).setStatus(UNANSWERED);
+                mrkIMG.setVisibility(View.GONE);
+                quesAdapter.notifyDataSetChanged();//tells the recylEr view that its data set has been changed so it will reinitiate after that
             }
         });
 
@@ -152,6 +205,53 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
             @Override
             public void onClick(View v) {
                 submitTest();
+            }
+        });
+        quesListB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //checking if draw is already open
+                if(!draw.isDrawerOpen(GravityCompat.END))
+                {
+                    //open drawer
+                    gridAdapter.notifyDataSetChanged();
+                    draw.openDrawer(GravityCompat.END);
+                }
+            }
+        });
+        drawcloseb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(draw.isDrawerOpen(GravityCompat.END))
+                {
+                    //Closes drawer if close button clicked and drawer is open
+                    draw.closeDrawer(GravityCompat.END);
+                }
+            }
+        });
+        markB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mrkIMG.getVisibility() != View.VISIBLE)
+                {
+                    mrkIMG.setVisibility(View.VISIBLE);
+                    g_quesList.get(quesID).setStatus(REVIEW);
+                }
+                else
+                {
+                    //if already visible, unmark question
+                    mrkIMG.setVisibility(View.GONE);
+
+                    if (g_quesList.get(quesID).getSelectedAns() != -1)
+                    {
+                        //IF QUESTIONS ANSWERED
+                        g_quesList.get(quesID).setStatus(ANSWERED);
+                    }
+                    else
+                    {
+                        g_quesList.get(quesID).setStatus(UNANSWERED);
+                    }
+                }
             }
         });
     }
@@ -185,6 +285,17 @@ public class QuestionsActivity extends AppCompatActivity{//ned to implement on t
         });
 
         alertDialog.show();
+    }
+    public void goToQ(int position)
+    {
+        //GOES TO SPECIFIED QUESTION POSITION
+        questionsView.smoothScrollToPosition(position);
+
+        if(draw.isDrawerOpen(GravityCompat.END))
+        {
+            //CLOSES DRAWER IF OPEN
+            draw.closeDrawer(GravityCompat.END);
+        }
     }
     private void  startTimer()
     {

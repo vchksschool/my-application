@@ -1,5 +1,10 @@
 package com.mtc.top5;
 
+import static com.mtc.top5.DBqueries.ANSWERED;
+import static com.mtc.top5.DBqueries.REVIEW;
+import static com.mtc.top5.DBqueries.UNANSWERED;
+import static com.mtc.top5.DBqueries.g_quesList;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,9 +84,14 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
             qlistcorrect.add(qlist.getOptionC());
             qlistcorrect.add(qlist.getOptionD());
             qlistcorrect.add(qlist.getOptionE());
-            textviewlistOfLists.add(qlistcorrect);
-            //orderedqlist =qlistcorrect;cant do, this will also store the shuffled array
             Collections.shuffle(qlistcorrect);
+            textviewlistOfLists.add(qlistcorrect);
+            QuestionsActivity.textviewlistOfLists.set(pos, qlistcorrect);
+            System.out.println(textviewlistOfLists);
+
+
+            //orderedqlist =qlistcorrect;cant do, this will also store the shuffled array
+            //Collections.shuffle(qlistcorrect);
             orderedqlist = new ArrayList<String>();
             orderedqlist.add(qlist.getOptionA());
             orderedqlist.add(qlist.getOptionB());
@@ -93,7 +103,7 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
 
 
 
-            ques.setText("Below are the top 5 " + questionsList.get(pos).getQuestion().replace("-", " ")+"."+ " What is number " + questionsList.get(pos).getCorrectAns()+ " in the list");
+            ques.setText("Below are the top 5 " + questionsList.get(pos).getQuestion().replace("-", " ")+"."+ " What is number " + questionsList.get(pos).getUserAnswerPosition()+ " in the list");
             optionA.setText(qlistcorrect.get(0));
             optionB.setText(qlistcorrect.get(1));
             optionC.setText(qlistcorrect.get(2));
@@ -153,17 +163,25 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
                 //means we havent selected any options yets(case 1)
 
                 btn.setBackgroundResource(R.drawable.selected_btn);//sets selected answer to corresponding questions
-                prevSelectedB = btn;
+
+
                 DBqueries.g_quesList.get(quesID).setSelectedAns(option_num);
+
+                changeStatus(quesID, ANSWERED);
+                prevSelectedB = btn;
+                //means the question is unanswered.
+                //also have to check if its a review question cause if it is, we dont change status
 
             }
             else
             {
-                if (prevSelectedB.getId() == btn.getId())//if button clckedd by user is clicked again this will unselect it
+                if (prevSelectedB.getId() == btn.getId())//if button clicked by user is clicked again this will unselect it
                 {
                     btn.setBackgroundResource(R.drawable.unselected_btn);
                     DBqueries.g_quesList.get(quesID).setSelectedAns(-1);
                     prevSelectedB = null;
+                    //question now unanswered
+                    changeStatus(quesID, UNANSWERED);
                 }
                 else// if button clicked is different from previously selected question
                 {
@@ -173,10 +191,20 @@ public class QuestionsAdapter  extends RecyclerView.Adapter<QuestionsAdapter.Vie
                     System.out.println(DBqueries.g_quesList.get(quesID).getQuestion());
                     System.out.println(DBqueries.g_quesList.get(quesID).getSelectedAns());
                     prevSelectedB = btn;
+                    changeStatus(quesID, ANSWERED);
 
                 }
 
                 //already selected one button(Case 2)
+            }
+        }
+
+        private void changeStatus(int qid, int questatus)
+        {
+            if(!(g_quesList.get(qid).getStatus() == REVIEW))
+            {
+                //means question not marked for review
+                g_quesList.get(qid).setStatus(questatus);
             }
         }
 

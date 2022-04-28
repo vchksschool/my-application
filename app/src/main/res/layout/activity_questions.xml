@@ -77,14 +77,7 @@
             android:textSize="18sp"
             android:layout_weight="1"
             />
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:id="@+id/qa_bookmark"
-            android:src="@drawable/ic_bookmark"
-            android:layout_weight="1"
 
-            />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,20 +153,32 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/questions_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/questions_view"
         android:layout_margin="16dp"
 
         app:layout_constraintBottom_toTopOf="@+id/ll3"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+
+
         app:layout_constraintTop_toBottomOf="@+id/ll4"
+        app:layout_constraintVertical_bias="1.0">
 
-
-
-
-        >
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/markimg"
+        android:src="@drawable/exclamationmark"
+        android:layout_marginEnd="16dp"
+        android:elevation="5dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll4"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

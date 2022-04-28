@@ -26,6 +26,7 @@ public class StartQuizActivity2 extends AppCompatActivity {
         totalQ.setText(String.valueOf(DBqueries.NoOfQues));
         time.setText(String.valueOf(DBqueries.NoOfQues));
         bestScore.setText(String.valueOf(DBqueries.myPerformance.getScore()));
+        //TODO: catName.setText(DBqueries.CATLIST.GETCATNAME);
     }
 
 
@@ -38,6 +39,7 @@ public class StartQuizActivity2 extends AppCompatActivity {
         startTestB = findViewById(R.id.start_testB);
 
         backB = findViewById(R.id.st_backB);
+
 
      backB.setOnClickListener(new View.OnClickListener() {
          @Override

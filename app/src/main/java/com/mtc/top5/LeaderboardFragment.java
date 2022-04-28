@@ -165,7 +165,7 @@ public class LeaderboardFragment extends Fragment {
         }
 
         DBqueries.myPerformance.setRank(rank);
-        System.out.println(rank);
+        System.out.println("WE ARE HERE");
 
     }
 }

@@ -43,9 +43,8 @@ public class VerificationCode extends AppCompatActivity {
                     finish();
 
 
-
                 } else {
-                    System.out.println("failure");
+                    Toast.makeText(getApplicationContext(), "Invalid verification Code", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {

@@ -15,6 +15,7 @@ public class RankModel {
 
     public void setScore(int score) {
         this.score = score;
+        System.out.println("Score changed to"+ Integer.toString(score));
     }
 
     public int getRank() {
@@ -22,6 +23,7 @@ public class RankModel {
     }
 
     public void setRank(int rank) {
+        System.out.println("rank changed to." + Integer.toString(rank));
         this.rank = rank;
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etName, etEmail, etPassword, etReenterPassword;
     private TextView tvStatus;
     private Button btnRegister;
+    private ImageView backB;
 
     private String URL = "http://51.38.80.233/victory/register.php";
     public static String name, email, password, reenterPassword;
@@ -41,6 +43,14 @@ public class SignUpActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         btnRegister = findViewById(R.id.signup_button);
         name = email = password = reenterPassword = "";
+        backB = findViewById(R.id.sibackB);
+
+        backB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignUpActivity.this.finish();
+            }
+        });
     }
 
     public void save(View view) {
@@ -48,15 +58,20 @@ public class SignUpActivity extends AppCompatActivity {
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
         reenterPassword = etReenterPassword.getText().toString().trim();
-        if(!password.equals(reenterPassword)){
-            Toast.makeText(this, "Password Mismatch", Toast.LENGTH_SHORT).show();
-        }
-        else if(!name.equals("") && !email.equals("") && !password.equals("")){
 
-            
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        if(!name.equals("") && !email.equals("") && !password.equals(""))
+        {
+            if(!password.equals(reenterPassword))
+            {
+
+                Toast.makeText(this, "Password Mismatch", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+
                     if (response.contains("success")) {
 
                         tvStatus.setText("Verify your email");
@@ -85,7 +100,15 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             };
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
             requestQueue.add(stringRequest);
+        }
+
+
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Please make sure No fields are empty", Toast.LENGTH_SHORT).show();
         }
     }
     public void login(View view) {

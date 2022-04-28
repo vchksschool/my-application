@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-    public void getscore()
+    public void getscore(MyCompleteListener completeListener)
     {   System.out.println(String.format("http://51.38.80.233/victory/getscore.php/?id=%s",String.valueOf(DBqueries.myProfile.getUid())));
         System.out.println("YOUR UID IS" + DBqueries.myProfile.getUid());
 
@@ -92,8 +92,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         String score = categories.getString("total_score").toString();
-
+                        System.out.println("Your score is "+ score);
                         DBqueries.myPerformance.setScore(Integer.valueOf(score));
+                        completeListener.onSuccess();
 
 
 
@@ -142,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         DBqueries.myProfile.setName(name);
                         DBqueries.myProfile.setUid(Integer.valueOf(uid));
+                        DBqueries.myProfile.setEmail(email);
                         DBqueries.myPerformance.setName(name);
                         completeListener.onSuccess();
 
@@ -182,7 +184,18 @@ public class LoginActivity extends AppCompatActivity {
             getnameuid(new MyCompleteListener() {
                 @Override
                 public void onSuccess() {
-                    getscore();
+                    getscore(new MyCompleteListener() {
+                        @Override
+                        public void onSuccess() {
+                            System.out.println("SUCCESSFUL");
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            System.out.println("failure");
+
+                        }
+                    });
                 }
 
                 @Override
@@ -233,13 +246,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void register(View view) {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    public String  GetName(String email){
-        return email;
-
-    }
 }

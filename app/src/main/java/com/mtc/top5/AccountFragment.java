@@ -22,6 +22,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * create an instance of this fragment.
  */
 public class AccountFragment extends Fragment {
+
+
     private LinearLayout logoutB;
     private  Dialog progressDialog;
     private TextView dialogText;
@@ -138,15 +140,17 @@ public class AccountFragment extends Fragment {
 
             }
         });
-        bookmarksB.setOnClickListener(new View.OnClickListener() {
+        /*bookmarksB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
         profileB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyProfileActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -167,7 +171,7 @@ public class AccountFragment extends Fragment {
         name =view.findViewById(R.id.name);
         rank =view.findViewById(R.id.rank);
         leaderB =view.findViewById(R.id.leaderboardB);
-        bookmarksB =view.findViewById(R.id.bookmarkB);
+        //bookmarksB =view.findViewById(R.id.bookmarkB);
         profileB =view.findViewById(R.id.profileB);
         bottomNavigationView = getActivity().findViewById(R.id.bottom_nav_bar);
 

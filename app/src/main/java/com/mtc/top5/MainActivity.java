@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static  int popupcount = 0;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout main_frame;
+    private TextView drawname, drawname2;
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //setSupportActionBar(binding.appBarMain.toolbar);
-
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         main_frame =  findViewById(R.id.main_frame);

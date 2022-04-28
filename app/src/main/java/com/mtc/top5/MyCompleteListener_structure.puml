@@ -1,0 +1,149 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.mtc.top5.MyCompleteListener"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_108444 { 
+   	label=mtc
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_555656046 { 
+   	label=top5
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   MyCompleteListener256831071[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)MyCompleteListener</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onFailure()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onSuccess()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+ScoreActivity256831071[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ScoreActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bottomNavigationView: BottomNavigationView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   completeListener: MyCompleteListener [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   correctQTV: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dialogText: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   frameLayout: FrameLayout [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   leaderB: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   progressDialog: Dialog [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   reAttemptB: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   score: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   scoreTV: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeTV: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeTaken: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   totalQTV: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   unattemptedQTV: TextView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   viewAnsB: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   wrongQTV: TextView [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- init()</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadData()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onOptionsItemSelected(item: MenuItem): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- reAttempt()</TD></TR>
+<TR><TD ALIGN="LEFT" >- saveResult()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+ScoreActivity256831071 -> MyCompleteListener256831071[label="completeListener
+[0..1]"];
+    
+}
+@enduml
